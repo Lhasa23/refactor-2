@@ -1,0 +1,10 @@
+{
+  "name": "refactor-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "eleven <sydryy@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
