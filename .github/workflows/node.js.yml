@@ -45,9 +45,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: 'Run Test'
         run: pnpm test
