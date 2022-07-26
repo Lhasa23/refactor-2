@@ -1,4 +1,23 @@
-export function statement (invoice: any, plays: any) {
+export type Invoices = {
+	customer: string,
+	performances: Performance[]
+}
+
+type Performance = { playID: string, audience: number }
+
+export type Plays = {
+	[key: string]: { name: string, type: 'tragedy' | 'comedy' }
+}
+
+export function statement (invoice: Invoices, plays: Plays) {
+	const statementData = {
+		customer: invoice.customer,
+		performances: invoice.performances
+	}
+	return renderPlainText(statementData, plays)
+}
+
+function renderPlainText (data: { customer: string; performances: Invoices['performances'] }, plays: Plays) {
 	function numberToCurrency (aNumber: number) {
 		return new Intl.NumberFormat('en-US',
 			{
@@ -8,11 +27,11 @@ export function statement (invoice: any, plays: any) {
 			}).format(aNumber / 100)
 	}
 
-	function getPlay (performance: any) {
+	function getPlay (performance: Performance) {
 		return plays[performance.playID]
 	}
 
-	function audienceBonus (aPerformance: any) {
+	function audienceBonus (aPerformance: Performance) {
 		let result = 0
 		switch (getPlay(aPerformance).type) {
 			case 'tragedy':
@@ -34,7 +53,7 @@ export function statement (invoice: any, plays: any) {
 		return result
 	}
 
-	function calculateVolumeCredits (aPerformance: any) {
+	function calculateVolumeCredits (aPerformance: Performance) {
 		let result = 0
 		result += Math.max(aPerformance.audience - 30, 0)
 		if ('comedy' === getPlay(aPerformance).type) result += Math.floor(aPerformance.audience / 5)
@@ -43,7 +62,7 @@ export function statement (invoice: any, plays: any) {
 
 	function totalVolumeCredits () {
 		let result = 0
-		for (let perf of invoice.performances) {
+		for (let perf of data.performances) {
 			result += calculateVolumeCredits(perf)
 		}
 		return result
@@ -51,14 +70,14 @@ export function statement (invoice: any, plays: any) {
 
 	function totalAmount () {
 		let result = 0
-		for (let perf of invoice.performances) {
+		for (let perf of data.performances) {
 			result += audienceBonus(perf)
 		}
 		return result
 	}
 
-	let result = `Statement for ${invoice.customer}\n`
-	for (let perf of invoice.performances) {
+	let result = `Statement for ${data.customer}\n`
+	for (let perf of data.performances) {
 		result += ` ${getPlay(perf).name}: ${numberToCurrency((audienceBonus(perf)))} (${(perf.audience)} seats)\n`
 	}
 	result += `Amount owed is ${numberToCurrency((totalAmount()))}\n`

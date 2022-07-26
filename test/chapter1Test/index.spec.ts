@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import indexFn from '../src'
+import indexFn from '../../src/Chapter1'
 
 // The two tests marked with concurrent will be run in parallel
 describe('test test', () => {
