@@ -1,6 +1,5 @@
 export function statement (invoice: any, plays: any) {
 	let totalAmount = 0
-	let volumeCredits = 0
 	let result = `Statement for ${invoice.customer}\n`
 
 	function numberToCurrency (aNumber: number) {
@@ -45,14 +44,20 @@ export function statement (invoice: any, plays: any) {
 		return result
 	}
 
-	for (let perf of invoice.performances) {
-		volumeCredits += calculateVolumeCredits(perf)
+	function totalVolumeCredits () {
+		let volumeCredits = 0
+		for (let perf of invoice.performances) {
+			volumeCredits += calculateVolumeCredits(perf)
+		}
+		return volumeCredits
+	}
 
+	for (let perf of invoice.performances) {
 		// print line for this order
 		result += ` ${getPlay(perf).name}: ${numberToCurrency((audienceBonus(perf)))} (${(perf.audience)} seats)\n`
 		totalAmount += audienceBonus(perf)
 	}
 	result += `Amount owed is ${numberToCurrency((totalAmount))}\n`
-	result += `You earned ${volumeCredits} credits\n`
+	result += `You earned ${(totalVolumeCredits())} credits\n`
 	return result
 }
