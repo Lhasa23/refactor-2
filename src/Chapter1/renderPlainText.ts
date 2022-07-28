@@ -1,5 +1,5 @@
 import { numberToCurrency } from './numberToCurrency'
-import { CustomizedPerformance } from './statement'
+import { CustomizedPerformance } from './type'
 
 export function renderPlainText (data: { customer: string; performances: CustomizedPerformance[], totalVolumeCredits: number, totalAmount: number }) {
 	let result = `<h1>Statement for ${data.customer}</h1>\n`
