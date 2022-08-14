@@ -8,68 +8,50 @@ function swallowedToCatch (swallowed: string, toCatch: string) {
 	return `She swallowed the ${swallowed} to catch the ${toCatch}`
 }
 
-function swallowAddSpider () {
-	return `There was an old lady who swallowed a spider;
-That wriggled and wiggled and tickled inside her.
-${swallowedToCatch('spider', 'fly')};
-${curseHerDie}`
+class SwallowAnimals {
+	private animals: string[]
+	private animalActions: string[]
+
+	constructor (animals: string[], animalActions: string[]) {
+		this.animals = animals
+		this.animalActions = animalActions
+	}
+
+	singing (): string {
+		let song = ''
+		for (let i = 0; i < this.animals.length; ++i) {
+			if (i === 0) {
+				song += `${readyToSwallow(this.animals[i])}.\n`
+				song += curseHerDie
+				continue
+			}
+			if (i === this.animals.length - 1) {
+				song += `${readyToSwallow(this.animals[i])}...\n`
+				song += '...She\'s dead, of course!'
+				continue
+			}
+			song += `${readyToSwallow(this.animals[i])};\n`
+			song += `${this.animalActions[i]}\n`
+			song += this.swallowedAnimals(i)
+			song += curseHerDie
+		}
+		return song
+	}
+
+	private swallowedAnimals (order: number) {
+		let swallowed = ''
+		for (let i = order; i > 0; --i) {
+			swallowed += `${swallowedToCatch(this.animals[i], this.animals[i - 1])}`
+			swallowed += `${i !== 1 ? ',' : ';'}\n`
+		}
+		return swallowed
+	}
 }
 
-function startToSwallow () {
-	return `There was an old lady who swallowed a fly.
-${curseHerDie}`
-}
-
-function swallowAddBird () {
-	return `${readyToSwallow('bird')};
-How absurd to swallow a bird.
-${swallowedToCatch('bird', 'spider')},
-${swallowedToCatch('spider', 'fly')};
-${curseHerDie}`
-}
-
-function swallowAddCat () {
-	return `${readyToSwallow('cat')};
-Fancy that to swallow a cat!
-${swallowedToCatch('cat', 'bird')},
-${swallowedToCatch('bird', 'spider')},
-${swallowedToCatch('spider', 'fly')};
-${curseHerDie}`
-}
-
-function swallowAddDog () {
-	return `${readyToSwallow('dog')};
-What a hog, to swallow a dog!
-${swallowedToCatch('dog', 'cat')},
-${swallowedToCatch('cat', 'bird')},
-${swallowedToCatch('bird', 'spider')},
-${swallowedToCatch('spider', 'fly')};
-${curseHerDie}`
-}
-
-function swallowAddCow () {
-	return `${readyToSwallow('cow')};
-I don't know how she swallowed a cow!
-${swallowedToCatch('cow', 'dog')},
-${swallowedToCatch('dog', 'cat')},
-${swallowedToCatch('cat', 'bird')},
-${swallowedToCatch('bird', 'spider')},
-${swallowedToCatch('spider', 'fly')};
-${curseHerDie}`
-}
-
-function endToSwallow () {
-	return `${readyToSwallow('horse')}...
-...She's dead, of course!`
-}
-
-const song = startToSwallow() +
-	swallowAddSpider() +
-	swallowAddBird() +
-	swallowAddCat() +
-	swallowAddDog() +
-	swallowAddCow() +
-	endToSwallow()
+const song = new SwallowAnimals(
+	['fly', 'spider', 'bird', 'cat', 'dog', 'cow', 'horse'],
+	['', 'That wriggled and wiggled and tickled inside her.', 'How absurd to swallow a bird.', 'Fancy that to swallow a cat!', 'What a hog, to swallow a dog!', 'I don\'t know how she swallowed a cow!', '']
+).singing()
 
 export default function sing () {
 	return song
