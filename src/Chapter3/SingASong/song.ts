@@ -1,50 +1,61 @@
-const curseHerDie = `I don't know why she swallowed a fly - perhaps she'll die!\n`
-
-function readyToSwallow (animal: string) {
-	return `There was an old lady who swallowed a ${animal}`
-}
-
-function swallowedToCatch (swallowed: string, toCatch: string) {
-	return `She swallowed the ${swallowed} to catch the ${toCatch}`
-}
-
 class SwallowAnimals {
-	private animals: string[]
-	private animalActions: string[]
+	private readonly animals: string[]
+	private readonly animalActions: string[]
+	private readonly curseHerDie: string
 
 	constructor (animals: string[], animalActions: string[]) {
 		this.animals = animals
 		this.animalActions = animalActions
+		this.curseHerDie = `I don't know why she swallowed a fly - perhaps she'll die!\n`
 	}
 
 	singing (): string {
 		let song = ''
-		for (let i = 0; i < this.animals.length; ++i) {
-			if (i === 0) {
-				song += `${readyToSwallow(this.animals[i])}.\n`
-				song += curseHerDie
-				continue
+		this.animals.forEach((animal, index) => {
+			if (index === 0) {
+				song += this.startSwallowed(animal)
+				return
 			}
-			if (i === this.animals.length - 1) {
-				song += `${readyToSwallow(this.animals[i])}...\n`
-				song += '...She\'s dead, of course!'
-				continue
+			if (index === this.animals.length - 1) {
+				song += this.endSwallowed(animal)
+				return
 			}
-			song += `${readyToSwallow(this.animals[i])};\n`
-			song += `${this.animalActions[i]}\n`
-			song += this.swallowedAnimals(i)
-			song += curseHerDie
-		}
+			song += this.swallowedProcedure(animal, index)
+		})
 		return song
+	}
+
+	private readyToSwallow (animal: string) {
+		return `There was an old lady who swallowed a ${animal}`
+	}
+
+	private swallowedToCatch (swallowed: string, toCatch: string) {
+		return `She swallowed the ${swallowed} to catch the ${toCatch}`
+	}
+
+	private startSwallowed (animal: string) {
+		return `${this.readyToSwallow(animal)}.\n${this.curseHerDie}`
+	}
+
+	private endSwallowed (animal: string) {
+		return `${this.readyToSwallow(animal)}...\n...She's dead, of course!`
 	}
 
 	private swallowedAnimals (order: number) {
 		let swallowed = ''
 		for (let i = order; i > 0; --i) {
-			swallowed += `${swallowedToCatch(this.animals[i], this.animals[i - 1])}`
+			swallowed += `${this.swallowedToCatch(this.animals[i], this.animals[i - 1])}`
 			swallowed += `${i !== 1 ? ',' : ';'}\n`
 		}
 		return swallowed
+	}
+
+	private swallowedProcedure (animal: string, index: number) {
+		let song = `${this.readyToSwallow(animal)};\n`
+		song += `${this.animalActions[index]}\n`
+		song += this.swallowedAnimals(index)
+		song += this.curseHerDie
+		return song
 	}
 }
 
