@@ -1,19 +1,20 @@
 import { Animal } from './animal'
 import { Animals } from './animals'
+import { OldLady } from './oldLady'
 
-class SwallowAnimals {
-	private readonly animals: Animals
+class SingASong {
+	private readonly oldLady: OldLady
 
 	constructor (animals: Animal[]) {
-		this.animals = new Animals(animals)
+		this.oldLady = new OldLady(new Animals(animals))
 	}
 
 	singing (): string {
-		return this.animals.swallowed()
+		return this.oldLady.swallow()
 	}
 }
 
-const song = new SwallowAnimals([
+const song = new SingASong([
 	new Animal('fly', ''),
 	new Animal('spider', 'That wriggled and wiggled and tickled inside her.'),
 	new Animal('bird', 'How absurd to swallow a bird.'),
