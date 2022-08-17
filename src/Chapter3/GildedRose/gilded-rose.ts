@@ -1,3 +1,5 @@
+import * as process from 'process'
+
 export class Item {
 	name: string
 	sellIn: number
