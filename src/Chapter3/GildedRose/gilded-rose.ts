@@ -19,41 +19,48 @@ export class GildedRose {
 
 	updateQuality () {
 		for (let i = 0; i < this.items.length; i++) {
-			if (this.items[i].name === 'Sulfuras, Hand of Ragnaros') continue
+			const currentItem = this.items[i]
+			if (currentItem.name === 'Sulfuras, Hand of Ragnaros') continue
 
-			start: if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-				if (this.items[i].quality <= 0) break start
+			if (currentItem.name === 'Backstage passes to a TAFKAL80ETC concert') {
+				currentItem.quality = currentItem.quality + 1
 
-				this.items[i].quality = this.items[i].quality - 1
-			} else {
-				if (this.items[i].quality >= 50) break start
-
-				this.items[i].quality = this.items[i].quality + 1
-
-				if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-					if (this.items[i].quality >= 50) break start
-					if (this.items[i].sellIn < 11) {
-						this.items[i].quality = this.items[i].quality + 1
-					}
-					if (this.items[i].quality >= 50) break start
-					if (this.items[i].sellIn < 6) {
-						this.items[i].quality = this.items[i].quality + 1
-					}
+				if (currentItem.sellIn < 11) {
+					currentItem.quality = currentItem.quality + 1
 				}
+				if (currentItem.sellIn < 6) {
+					currentItem.quality = currentItem.quality + 1
+				}
+				if (currentItem.quality >= 50) {
+					currentItem.quality = 50
+				}
+
+				if (--currentItem.sellIn >= 0) continue
+				currentItem.quality = 0
+				continue
 			}
-			this.items[i].sellIn = this.items[i].sellIn - 1
-			if (this.items[i].sellIn >= 0) continue
-			if (this.items[i].name != 'Aged Brie') {
-				if (this.items[i].name === 'Backstage passes to a TAFKAL80ETC concert') {
-					this.items[i].quality = this.items[i].quality - this.items[i].quality
-					continue
+
+			if (currentItem.name === 'Aged Brie') {
+				currentItem.quality = currentItem.quality + 1
+				if (currentItem.quality >= 50) {
+					currentItem.quality = 50
 				}
-				if (this.items[i].quality > 0) {
-					this.items[i].quality = this.items[i].quality - 1
-				}
-			} else {
-				if (this.items[i].quality >= 50) continue
-				this.items[i].quality = this.items[i].quality + 1
+				currentItem.sellIn = currentItem.sellIn - 1
+				if (currentItem.sellIn >= 0) continue
+				if (currentItem.quality >= 50) continue
+				currentItem.quality = currentItem.quality + 1
+				continue
+			}
+
+			if (currentItem.quality > 0) {
+				currentItem.quality = currentItem.quality - 1
+			}
+
+			currentItem.sellIn = currentItem.sellIn - 1
+			if (currentItem.sellIn >= 0) continue
+
+			if (currentItem.quality > 0) {
+				currentItem.quality = currentItem.quality - 1
 			}
 		}
 
