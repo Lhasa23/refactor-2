@@ -72,30 +72,29 @@ describe('Gilded Rose', () => {
 
 	it('should Sulfuras item present correct', () => {
 		const items = [
-			new Item('Sulfuras, Hand of Ragnaros', 0, 80),
-			new Item('Sulfuras, Hand of Ragnaros', -1, 80)
+			new Item('Sulfuras, Hand of Ragnaros', -2, 80)
 		]
 		const gildedRose = new GildedRose(items)
 		for (let i of new Array(3).fill(1)) {
 			gildedRose.updateQuality()
 			items.forEach(element => {
 				expect(element.name).toBe(element.name)
-				expect(element.sellIn).toBe(element.sellIn)
-				expect(element.quality).toBe(element.quality)
+				expect(element.sellIn).toBe(-2)
+				expect(element.quality).toBe(80)
 			})
 		}
 	})
 
 	it('should Backstage item normal limited quality present correct', () => {
 		const items = [
-			new Item('Backstage passes to a TAFKAL80ETC concert', 15, 49)
+			new Item('Backstage passes to a TAFKAL80ETC concert', 15, 48)
 		]
 		const gildedRose = new GildedRose(items)
 		gildedRose.updateQuality()
 		items.forEach(element => {
 			expect(element.name).toBe(element.name)
 			expect(element.sellIn).toBe(14)
-			expect(element.quality).toBe(50)
+			expect(element.quality).toBe(49)
 		})
 		gildedRose.updateQuality()
 		items.forEach(element => {
@@ -113,11 +112,17 @@ describe('Gilded Rose', () => {
 
 	it('should Backstage item present correct', () => {
 		const items = [
-			new Item('Backstage passes to a TAFKAL80ETC concert', 2, 49)
+			new Item('Backstage passes to a TAFKAL80ETC concert', 3, 45)
 			// this conjured item does not work properly yet
 			// new Item('Conjured Mana Cake', 3, 6)
 		]
 		const gildedRose = new GildedRose(items)
+		gildedRose.updateQuality()
+		items.forEach(element => {
+			expect(element.name).toBe(element.name)
+			expect(element.sellIn).toBe(2)
+			expect(element.quality).toBe(48)
+		})
 		gildedRose.updateQuality()
 		items.forEach(element => {
 			expect(element.name).toBe(element.name)
