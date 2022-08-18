@@ -1,3 +1,5 @@
+import { AgedBrieQuality, BackstageQuality, NormalQuality, Quality, SulfurasQuality } from './quality'
+
 export class Item {
 	name: string
 	sellIn: number
@@ -7,6 +9,19 @@ export class Item {
 		this.name = name
 		this.sellIn = sellIn
 		this.quality = quality
+	}
+}
+
+function calculateItemQuality (currentItem: Item) {
+	switch (currentItem.name) {
+		case 'Sulfuras, Hand of Ragnaros':
+			return new SulfurasQuality(currentItem).updateQuality()
+		case 'Backstage passes to a TAFKAL80ETC concert':
+			return new BackstageQuality(currentItem).updateQuality()
+		case 'Aged Brie':
+			return new AgedBrieQuality(currentItem).updateQuality()
+		default:
+			return new NormalQuality(currentItem).updateQuality()
 	}
 }
 
@@ -20,51 +35,10 @@ export class GildedRose {
 	updateQuality () {
 		for (let i = 0; i < this.items.length; i++) {
 			const currentItem = this.items[i]
-
-			switch (currentItem.name) {
-				case 'Sulfuras, Hand of Ragnaros':
-					break
-				case 'Backstage passes to a TAFKAL80ETC concert':
-					currentItem.quality = currentItem.quality + 1
-
-					if (currentItem.sellIn < 11) {
-						currentItem.quality = currentItem.quality + 1
-					}
-					if (currentItem.sellIn < 6) {
-						currentItem.quality = currentItem.quality + 1
-					}
-					if (currentItem.quality >= 50) {
-						currentItem.quality = 50
-					}
-
-					if (--currentItem.sellIn >= 0) break
-					currentItem.quality = 0
-					break
-				case 'Aged Brie':
-					currentItem.quality = currentItem.quality + 1
-					if (currentItem.quality >= 50) {
-						currentItem.quality = 50
-					}
-					currentItem.sellIn = currentItem.sellIn - 1
-					if (currentItem.sellIn >= 0) break
-					if (currentItem.quality >= 50) break
-					currentItem.quality = currentItem.quality + 1
-					break
-				default:
-					if (currentItem.quality > 0) {
-						currentItem.quality = currentItem.quality - 1
-					}
-
-					currentItem.sellIn = currentItem.sellIn - 1
-					if (currentItem.sellIn >= 0) break
-
-					if (currentItem.quality > 0) {
-						currentItem.quality = currentItem.quality - 1
-					}
-					break
-			}
+			calculateItemQuality(currentItem)
 		}
 
 		return this.items
 	}
 }
+
