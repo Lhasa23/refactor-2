@@ -8,16 +8,9 @@ export class Quality {
 	}
 
 	updateQuality () {
-		if (this.currentItem.quality > 0) {
-			this.currentItem.quality = this.currentItem.quality - 1
-		}
-
-		this.currentItem.sellIn = this.currentItem.sellIn - 1
-		if (this.currentItem.sellIn >= 0) return
-
-		if (this.currentItem.quality > 0) {
-			this.currentItem.quality = this.currentItem.quality - 1
-		}
+		this.currentItem.quality--
+		if (--this.currentItem.sellIn >= 0) return
+		this.currentItem.quality = Math.max(0, --this.currentItem.quality)
 	}
 }
 
@@ -40,21 +33,18 @@ export class BackstageQuality extends Quality {
 	}
 
 	updateQuality () {
-		this.currentItem.quality = this.currentItem.quality + 1
+		this.currentItem.quality++
 
 		if (this.currentItem.sellIn < 11) {
-			this.currentItem.quality = this.currentItem.quality + 1
+			this.currentItem.quality++
 		}
 		if (this.currentItem.sellIn < 6) {
-			this.currentItem.quality = this.currentItem.quality + 1
+			this.currentItem.quality++
 		}
-		if (this.currentItem.quality >= 50) {
-			this.currentItem.quality = 50
-		}
+		this.currentItem.quality = Math.min(50, this.currentItem.quality)
 
 		if (--this.currentItem.sellIn >= 0) return
 		this.currentItem.quality = 0
-		return
 	}
 }
 
@@ -64,13 +54,8 @@ export class AgedBrieQuality extends Quality {
 	}
 
 	updateQuality () {
-		this.currentItem.quality = this.currentItem.quality + 1
-		if (this.currentItem.quality >= 50) {
-			this.currentItem.quality = 50
-		}
-		this.currentItem.sellIn = this.currentItem.sellIn - 1
-		if (this.currentItem.sellIn >= 0) return
-		if (this.currentItem.quality >= 50) return
-		this.currentItem.quality = this.currentItem.quality + 1
+		this.currentItem.quality++
+		if (--this.currentItem.sellIn >= 0) return
+		this.currentItem.quality = Math.min(50, ++this.currentItem.quality)
 	}
 }
