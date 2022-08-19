@@ -1,4 +1,9 @@
-import { AgedBrieQuality, BackstageQuality, ConjuredQuality, NormalQuality, Quality, SulfurasQuality } from './quality'
+import { Quality } from './quality'
+import { NormalQuality } from './subQuality/normalQuality'
+import { SulfurasQuality } from './subQuality/sulfurasQuality'
+import { BackstageQuality } from './subQuality/backstageQuality'
+import { AgedBrieQuality } from './subQuality/agedBrieQuality'
+import { ConjuredQuality } from './subQuality/conjuredQuality'
 
 export class Item {
 	name: string
