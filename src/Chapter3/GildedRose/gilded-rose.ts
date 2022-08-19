@@ -1,4 +1,4 @@
-import { AgedBrieQuality, BackstageQuality, NormalQuality, Quality, SulfurasQuality } from './quality'
+import { AgedBrieQuality, BackstageQuality, ConjuredQuality, NormalQuality, Quality, SulfurasQuality } from './quality'
 
 export class Item {
 	name: string
@@ -20,6 +20,8 @@ function calculateItemQuality (currentItem: Item) {
 			return new BackstageQuality(currentItem).updateQuality()
 		case 'Aged Brie':
 			return new AgedBrieQuality(currentItem).updateQuality()
+		case 'Conjured Mana Cake':
+			return new ConjuredQuality(currentItem).updateQuality()
 		default:
 			return new NormalQuality(currentItem).updateQuality()
 	}

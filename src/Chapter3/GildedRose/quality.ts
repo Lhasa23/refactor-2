@@ -7,10 +7,12 @@ export class Quality {
 		this.currentItem = currentItem
 	}
 
-	updateQuality () {
-		this.currentItem.quality--
+	updateQuality (degrade: number = 1) {
+		this.currentItem.quality -= degrade
 		if (--this.currentItem.sellIn >= 0) return
-		this.currentItem.quality = Math.max(0, --this.currentItem.quality)
+
+		this.currentItem.quality -= degrade
+		this.currentItem.quality = Math.max(0, this.currentItem.quality)
 	}
 }
 
@@ -57,5 +59,15 @@ export class AgedBrieQuality extends Quality {
 		this.currentItem.quality++
 		if (--this.currentItem.sellIn >= 0) return
 		this.currentItem.quality = Math.min(50, ++this.currentItem.quality)
+	}
+}
+
+export class ConjuredQuality extends Quality {
+	constructor (currentItem: Item) {
+		super(currentItem)
+	}
+
+	updateQuality () {
+		super.updateQuality(2)
 	}
 }

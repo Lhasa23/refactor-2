@@ -113,8 +113,6 @@ describe('Gilded Rose', () => {
 	it('should Backstage item present correct', () => {
 		const items = [
 			new Item('Backstage passes to a TAFKAL80ETC concert', 3, 45)
-			// this conjured item does not work properly yet
-			// new Item('Conjured Mana Cake', 3, 6)
 		]
 		const gildedRose = new GildedRose(items)
 		gildedRose.updateQuality()
@@ -145,13 +143,20 @@ describe('Gilded Rose', () => {
 
 	it('should Conjured item present correct', () => {
 		const items = [
-			// this conjured item does not work properly yet
-			new Item('Conjured Mana Cake', 3, 6)
+			new Item('Conjured Mana Cake', 1, 6)
 		]
 		const gildedRose = new GildedRose(items)
 		gildedRose.updateQuality()
 		items.forEach(element => {
 			expect(element.name).toBe(element.name)
+			expect(element.sellIn).toBe(0)
+			expect(element.quality).toBe(4)
+		})
+		gildedRose.updateQuality()
+		items.forEach(element => {
+			expect(element.name).toBe(element.name)
+			expect(element.sellIn).toBe(-1)
+			expect(element.quality).toBe(0)
 		})
 	})
 })
