@@ -2,9 +2,11 @@ import { Animal } from './animal'
 
 export class Animals {
 	readonly animals: Animal[]
+	position: number
 
 	constructor (animals: Animal[]) {
 		this.animals = animals
+		this.position = 0
 	}
 
 	get length () {
@@ -15,12 +17,16 @@ export class Animals {
 		return this.animals[0].name
 	}
 
-	oldLadySwallow () {
-		return `She swallowed the `
+	next () {
+		this.position++
 	}
 
-	indexOf (animal: Animal) {
-		return this.animals.findIndex((item) => item.name === animal.name)
+	reset () {
+		this.position = 0
+	}
+
+	oldLadySwallow () {
+		return `She swallowed the `
 	}
 
 	getSwallowed (index: number) {
@@ -31,23 +37,20 @@ export class Animals {
 		return this.animals[index].caught
 	}
 
-	swallowCurrentAnimal (i: number) {
-		const currentAnimal = this.animals[i]
-		if (i === 0) {
-			return this.swallowCurrent(currentAnimal, `.\n`)
-		}
-		if (i === this.length - 1) {
-			return this.swallowCurrent(currentAnimal, `...\n`)
-		}
-		return this.swallowCurrent(currentAnimal, `;\n`)
+	swallowCurrentAnimal () {
+		const currentAnimal = this.animals[this.position]
+		const splitter = this.position === 0
+			? `.\n`
+			: this.position === this.length - 1 ? `...\n` : `;\n`
+		return this.swallowCurrent(currentAnimal, splitter)
 	}
 
 	private swallowCurrent (currentAnimal: Animal, splitter: string) {
-		return currentAnimal.swallowed + splitter + currentAnimal.swallowedAction + this.animalsCatch(currentAnimal)
+		return currentAnimal.swallowed + splitter + currentAnimal.swallowedAction + this.animalsCatch()
 	}
 
-	private animalsCatch (animal: Animal) {
-		let order = this.indexOf(animal) + 1
+	private animalsCatch () {
+		let order = this.position + 1
 		if (order <= 1) return ''
 		if (order === this.length) return ''
 		return this.animals.slice(0, order).reduceRight((result, _, index) => {

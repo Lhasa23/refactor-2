@@ -17,8 +17,11 @@ export class OldLady {
 	}
 
 	swallow (animals: Animals) {
-		return [...Array(animals.length).keys()].reduce((result, index) => {
-			return result + this.swallowPrefix() + animals.swallowCurrentAnimal(index) + this.afterSwallow(index, animals)
+		animals.reset()
+		return [...Array(animals.length).keys()].reduce((result) => {
+			result += this.swallowPrefix() + animals.swallowCurrentAnimal() + this.afterSwallow(animals.position, animals)
+			animals.next()
+			return result
 		}, '')
 	}
 
