@@ -23,6 +23,14 @@ export class Animals {
 		return `I don't know why she swallowed a ${this.firstAnimal} - perhaps she'll die!\n`
 	}
 
+	oldLadySwallowed () {
+		return `There was an old lady who swallowed a `
+	}
+
+	oldLadySwallow () {
+		return `She swallowed the `
+	}
+
 	indexOf (animal: Animal) {
 		return this.animals.findIndex((item) => item.name === animal.name)
 	}
@@ -36,27 +44,25 @@ export class Animals {
 	}
 
 	swallowed (): string {
-		return this.animals.reduce(this.swallowEachAnimal(), '')
+		return this.animals.slice(1, this.animals.length - 1).reduce(this.swallowEachAnimal(), '')
+	}
+
+	animalLastSwallowed () {
+		return this.last.swallowed
+	}
+
+	animalFirstSwallowed () {
+		return this.first.swallowed
 	}
 
 	private swallowEachAnimal () {
 		return (result: string, animal: Animal) => {
-			if (animal === this.first) {
-				return result + this.startSwallow(animal)
-			}
-			if (animal === this.last) {
-				return result + this.endSwallow(animal)
-			}
 			return result + this.swallowProcedure(animal)
 		}
 	}
 
-	private startSwallow (animal: Animal) {
-		return `There was an old lady who swallowed a ${(animal.swallowed)}.\n${this.animalsCurse}`
-	}
-
 	private swallowProcedure (animal: Animal) {
-		let result = `There was an old lady who swallowed a ${(animal.swallowed)};\n${animal.swallowedAction}`
+		let result = `${this.oldLadySwallowed()}${(animal.swallowed)};\n${animal.swallowedAction}`
 		result += this.swallowAnimalsBeforeWith(animal)
 
 		result += this.animalsCurse
@@ -64,15 +70,11 @@ export class Animals {
 		return result
 	}
 
-	private endSwallow (animal: Animal) {
-		return `There was an old lady who swallowed a ${(animal.swallowed)}...\n...She's dead, of course!`
-	}
-
 	private swallowAnimalsBeforeWith (animal: Animal) {
 		let order = this.indexOf(animal)
 		return this.animals.slice(0, order + 1).reduceRight((result, _, index) => {
 			if (index < 1) return result
-			return result + `She swallowed the ${this.getSwallowed(index)} to catch the ${this.getCaught(index - 1)}${index !== 1 ? ',' : ';'}\n`
+			return result + this.oldLadySwallow() + `${this.getSwallowed(index)} to catch the ${this.getCaught(index - 1)}${index !== 1 ? ',' : ';'}\n`
 		}, '')
 	}
 }
