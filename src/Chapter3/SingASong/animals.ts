@@ -7,20 +7,12 @@ export class Animals {
 		this.animals = animals
 	}
 
-	get first () {
-		return this.animals[0]
-	}
-
-	get last () {
-		return this.animals[this.animals.length - 1]
-	}
-
 	get length () {
 		return this.animals.length
 	}
 
 	get firstAnimal () {
-		return this.first.name
+		return this.animals[0].name
 	}
 
 	oldLadySwallow () {
@@ -39,33 +31,26 @@ export class Animals {
 		return this.animals[index].caught
 	}
 
-	animalLastSwallowed () {
-		return this.last.swallowed + `...\n`
-	}
-
-	animalFirstSwallowed () {
-		return this.first.swallowed + `.\n`
-	}
-
 	swallowCurrentAnimal (i: number) {
+		const currentAnimal = this.animals[i]
 		if (i === 0) {
-			return this.animalFirstSwallowed()
+			return this.swallowCurrent(currentAnimal, `.\n`)
 		}
 		if (i === this.length - 1) {
-			return this.animalLastSwallowed()
+			return this.swallowCurrent(currentAnimal, `...\n`)
 		}
-		return this.swallowProcedure(this.animals[i])
+		return this.swallowCurrent(currentAnimal, `;\n`)
 	}
 
-	swallowProcedure (animal: Animal) {
-		let result = `${(animal.swallowed)};\n${animal.swallowedAction}`
-		result += this.swallowAnimalsBeforeWith(animal)
-		return result
+	private swallowCurrent (currentAnimal: Animal, splitter: string) {
+		return currentAnimal.swallowed + splitter + currentAnimal.swallowedAction + this.animalsCatch(currentAnimal)
 	}
 
-	private swallowAnimalsBeforeWith (animal: Animal) {
-		let order = this.indexOf(animal)
-		return this.animals.slice(0, order + 1).reduceRight((result, _, index) => {
+	private animalsCatch (animal: Animal) {
+		let order = this.indexOf(animal) + 1
+		if (order <= 1) return ''
+		if (order === this.length) return ''
+		return this.animals.slice(0, order).reduceRight((result, _, index) => {
 			if (index < 1) return result
 			return result + this.oldLadySwallow() + `${this.getSwallowed(index)} to catch the ${this.getCaught(index - 1)}${index !== 1 ? ',' : ';'}\n`
 		}, '')

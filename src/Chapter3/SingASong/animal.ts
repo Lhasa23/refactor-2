@@ -12,7 +12,7 @@ export class Animal {
 	}
 
 	get swallowedAction () {
-		return `${this.action}\n`
+		return this.action ? this.action + `\n` : ''
 	}
 
 	get caught () {
