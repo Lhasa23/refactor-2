@@ -25,10 +25,6 @@ export class Animals {
 		this.position = 0
 	}
 
-	oldLadySwallow () {
-		return `She swallowed the `
-	}
-
 	getSwallowed (index: number) {
 		return this.animals[index].swallowed
 	}
@@ -37,25 +33,25 @@ export class Animals {
 		return this.animals[index].caught
 	}
 
-	swallowCurrentAnimal () {
+	swallowCurrentAnimal (whoSwallow: string) {
 		const currentAnimal = this.animals[this.position]
 		const splitter = this.position === 0
 			? `.\n`
 			: this.position === this.length - 1 ? `...\n` : `;\n`
-		return this.swallowCurrent(currentAnimal, splitter)
+		return this.swallowCurrent(currentAnimal, splitter, whoSwallow)
 	}
 
-	private swallowCurrent (currentAnimal: Animal, splitter: string) {
-		return currentAnimal.swallowed + splitter + currentAnimal.swallowedAction + this.animalsCatch()
+	private swallowCurrent (currentAnimal: Animal, splitter: string, whoSwallow: string) {
+		return currentAnimal.swallowed + splitter + currentAnimal.swallowedAction + this.animalsCatch(whoSwallow)
 	}
 
-	private animalsCatch () {
+	private animalsCatch (whoSwallow: string) {
 		let order = this.position + 1
 		if (order <= 1) return ''
 		if (order === this.length) return ''
 		return this.animals.slice(0, order).reduceRight((result, _, index) => {
 			if (index < 1) return result
-			return result + this.oldLadySwallow() + `${this.getSwallowed(index)} to catch the ${this.getCaught(index - 1)}${index !== 1 ? ',' : ';'}\n`
+			return result + whoSwallow + `${this.getSwallowed(index)} to catch the ${this.getCaught(index - 1)}${index !== 1 ? ',' : ';'}\n`
 		}, '')
 	}
 }
