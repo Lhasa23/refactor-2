@@ -15,16 +15,12 @@ export class Animals {
 		return this.animals[this.animals.length - 1]
 	}
 
+	get length () {
+		return this.animals.length
+	}
+
 	get firstAnimal () {
 		return this.first.name
-	}
-
-	get animalsCurse () {
-		return `I don't know why she swallowed a ${this.firstAnimal} - perhaps she'll die!\n`
-	}
-
-	oldLadySwallowed () {
-		return `There was an old lady who swallowed a `
 	}
 
 	oldLadySwallow () {
@@ -43,30 +39,27 @@ export class Animals {
 		return this.animals[index].caught
 	}
 
-	swallowed (): string {
-		return this.animals.slice(1, this.animals.length - 1).reduce(this.swallowEachAnimal(), '')
-	}
-
 	animalLastSwallowed () {
-		return this.last.swallowed
+		return this.last.swallowed + `...\n`
 	}
 
 	animalFirstSwallowed () {
-		return this.first.swallowed
+		return this.first.swallowed + `.\n`
 	}
 
-	private swallowEachAnimal () {
-		return (result: string, animal: Animal) => {
-			return result + this.swallowProcedure(animal)
+	swallowCurrentAnimal (i: number) {
+		if (i === 0) {
+			return this.animalFirstSwallowed()
 		}
+		if (i === this.length - 1) {
+			return this.animalLastSwallowed()
+		}
+		return this.swallowProcedure(this.animals[i])
 	}
 
-	private swallowProcedure (animal: Animal) {
-		let result = `${this.oldLadySwallowed()}${(animal.swallowed)};\n${animal.swallowedAction}`
+	swallowProcedure (animal: Animal) {
+		let result = `${(animal.swallowed)};\n${animal.swallowedAction}`
 		result += this.swallowAnimalsBeforeWith(animal)
-
-		result += this.animalsCurse
-
 		return result
 	}
 

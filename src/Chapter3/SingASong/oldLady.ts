@@ -17,8 +17,12 @@ export class OldLady {
 	}
 
 	swallow (animals: Animals) {
-		let result = this.swallowPrefix() + `${animals.animalFirstSwallowed()}.\n` + this.curse(animals)
-		result += animals.swallowed()
-		return result + this.swallowPrefix() + `${animals.animalLastSwallowed()}...\n` + this.dead()
+		return [...Array(animals.length).keys()].reduce((result, index) => {
+			return result + this.swallowPrefix() + animals.swallowCurrentAnimal(index) + this.afterSwallow(index, animals)
+		}, '')
+	}
+
+	private afterSwallow (i: number, animals: Animals) {
+		return i === animals.length - 1 ? this.dead() : this.curse(animals)
 	}
 }
