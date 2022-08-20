@@ -1,16 +1,15 @@
 import { Animal } from './animal'
 import { Animals } from './animals'
-import { OldLady } from './oldLady'
 
 class SingASong {
-	private readonly oldLady: OldLady
+	private readonly animals: Animals
 
 	constructor (animals: Animal[]) {
-		this.oldLady = new OldLady(new Animals(animals))
+		this.animals = new Animals(animals)
 	}
 
 	singing (): string {
-		return this.oldLady.swallow()
+		return this.animals.swallowed()
 	}
 }
 
