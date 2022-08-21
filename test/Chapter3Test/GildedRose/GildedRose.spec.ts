@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 describe('Gilded Rose', () => {
 	it('should normal item present correct', () => {
 		const items = [
-			new Item('+5 Dexterity Vest', 3, 6) //
+			new Item('+5 Dexterity Vest', 3, 6)
 		]
 		const gildedRose = new GildedRose(items)
 		gildedRose.updateQuality()
@@ -47,7 +47,7 @@ describe('Gilded Rose', () => {
 
 	it('should Aged Brie item present correct', () => {
 		const items = [
-			new Item('Aged Brie', 2, 0) //
+			new Item('Aged Brie', 2, 0)
 		]
 		const gildedRose = new GildedRose(items)
 		gildedRose.updateQuality()
