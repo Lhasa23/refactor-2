@@ -27,4 +27,16 @@ describe('shopping cart', () => {
 
 		expect(cart.hasDiscount()).toBeFalsy()
 	})
+
+	it('calculates the multiple prices', () => {
+		cart.add(10, 10, 11, 14, 16)
+
+		expect(cart.calculateTotalPrice()).toBe(61)
+	})
+
+	it('calculates the product number with price', () => {
+		cart.add(10, 10, 11, 14, 20)
+
+		expect(cart.numberOfProducts()).toBe(5)
+	})
 })
