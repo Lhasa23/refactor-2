@@ -26,12 +26,12 @@ export default class TelemetryDiagnosticControls {
 		this.telemetryClient.disconnect();
 
 		let retryLeft = 3;
-		while (this.telemetryClient.getOnlineStatus() === false && retryLeft > 0) {
+		while (!this.telemetryClient.getOnlineStatus() && retryLeft > 0) {
 			this.telemetryClient.connect(this.diagnosticChannelConnectionString);
 			retryLeft -= 1;
 		}
 
-		if (this.telemetryClient.getOnlineStatus() === false) {
+		if (!this.telemetryClient.getOnlineStatus()) {
 			throw new Error('Unable to connect');
 		}
 
