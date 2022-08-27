@@ -1,29 +1,28 @@
-import Sensor from './sensor';
+import Sensor from './sensor'
 
+// only responsible for checking tire pressure to alarm
 export default class Alarm {
-	private highPressureThreshold: number;
-	private lowPressureThreshold: number;
+	readonly highPressureThreshold: number = 21
+	readonly lowPressureThreshold: number = 17
 
-	private sensor: Sensor;
-	private alarmOn: boolean;
+	private sensor: Sensor
+	private alarmOn: boolean
 
-	constructor() {
-		this.lowPressureThreshold = 17;
-		this.highPressureThreshold = 21;
-		this.sensor = new Sensor();
-		this.alarmOn = false;
+	constructor () {
+		this.sensor = new Sensor()
+		this.alarmOn = false
 	}
 
-	public check() {
-		const psiPressureValue = this.sensor.popNextPressurePsiValue();
-
-		if (psiPressureValue < this.lowPressureThreshold || this.highPressureThreshold < psiPressureValue) {
-			this.alarmOn = true;
-		}
+	public check () {
+		this.alarmOn = this.judgeCurrentPSI(this.sensor.popNextPressurePsiValue())
 	}
 
-	public isAlarmOn() {
-		return this.alarmOn;
+	judgeCurrentPSI (psiPressureValue: number) {
+		return psiPressureValue < this.lowPressureThreshold || this.highPressureThreshold < psiPressureValue
+	}
+
+	public isAlarmOn () {
+		return this.alarmOn
 	}
 
 }
