@@ -11,23 +11,18 @@ export default class HtmlTextConverter {
 	}
 
 	public convertToHtml (): string {
-		const html: string[] = []
-		let convertingLine: string[] = []
-
-		this.text.split('').forEach((char) => {
-			if (char === '\n') {
-				html.push(convertingLine.join(''))
-				convertingLine = []
-				return
-			}
-			convertingLine.push(this.keyMap[char] || char)
-		})
-
-		html.push(convertingLine.join(''))
-		return html.join('<br />')
+		return this.text.split('\n').map((line) => {
+			return line.split('').reduce((convertingLine, char) => {
+				return convertingLine + this.getEscapeChar(char)
+			}, '')
+		}).join('<br />')
 	}
 
 	public getFilename () {
 		return this.fullFilenameWithPath.split('/').pop()
+	}
+
+	private getEscapeChar (char: string) {
+		return this.keyMap[char] || char
 	}
 }
