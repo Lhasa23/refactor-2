@@ -7,7 +7,7 @@ describe('Html Converter', () => {
 
 		it('should read file name correct', () => {
 			const converter = new HtmlTextConverter('test/Chapter3Test/RaceCar/text-converter-tests/html-test')
-			expect(converter.getFilename()).to.eql('test/Chapter3Test/RaceCar/text-converter-tests/html-test')
+			expect(converter.getFilename()).to.eql('html-test')
 		})
 
 		it('should read file html converted correct', () => {

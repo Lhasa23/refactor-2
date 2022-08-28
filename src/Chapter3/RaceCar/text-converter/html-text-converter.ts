@@ -12,22 +12,22 @@ export default class HtmlTextConverter {
 
 	public convertToHtml (): string {
 		const html: string[] = []
-		let convertedLine: string[] = []
+		let convertingLine: string[] = []
 
 		this.text.split('').forEach((char) => {
 			if (char === '\n') {
-				html.push(convertedLine.join(''))
-				convertedLine = []
+				html.push(convertingLine.join(''))
+				convertingLine = []
 				return
 			}
-			convertedLine.push(this.keyMap[char] || char)
+			convertingLine.push(this.keyMap[char] || char)
 		})
 
-		html.push(convertedLine.join(''))
+		html.push(convertingLine.join(''))
 		return html.join('<br />')
 	}
 
 	public getFilename () {
-		return this.fullFilenameWithPath
+		return this.fullFilenameWithPath.split('/').pop()
 	}
 }
