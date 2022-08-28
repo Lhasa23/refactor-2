@@ -1,63 +1,33 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs'
 
 export default class HtmlTextConverter {
-	private fullFilenameWithPath: string;
+	private readonly fullFilenameWithPath: string
+	private readonly text: string
+	private readonly keyMap: { [name: string]: string } = { '<': '&lt;', '>': '&gt;', '&': '&amp;' }
 
-	constructor(fullFilenameWithPath: string) {
-		this.fullFilenameWithPath = fullFilenameWithPath;
+	constructor (fullFilenameWithPath: string) {
+		this.fullFilenameWithPath = fullFilenameWithPath
+		this.text = readFileSync(this.fullFilenameWithPath).toString()
 	}
 
-	public convertToHtml(): string {
+	public convertToHtml (): string {
+		const html: string[] = []
+		let convertedLine: string[] = []
 
-		const text = readFileSync(this.fullFilenameWithPath).toString();
-
-		function stashNextCharacterAndAdvanceThePointer() {
-			const c = text.charAt(i);
-			i += 1;
-			return c;
-		}
-
-		function addANewLine() {
-			const line = convertedLine.join('');
-			html.push(line);
-			convertedLine = [];
-		}
-
-		function pushACharacterToTheOutput() {
-			convertedLine.push(characterToConvert);
-		}
-
-		let i = 0;
-		const html: string[] = [];
-		let convertedLine: string[] = [];
-		let characterToConvert = stashNextCharacterAndAdvanceThePointer();
-		while (i <= text.length) {
-
-			switch (characterToConvert) {
-				case '<':
-					convertedLine.push('&lt;');
-					break;
-				case '>':
-					convertedLine.push('&gt;');
-					break;
-				case '&':
-					convertedLine.push('&amp;');
-					break;
-				case '\n':
-					addANewLine();
-					break;
-				default:
-					pushACharacterToTheOutput();
+		this.text.split('').forEach((char) => {
+			if (char === '\n') {
+				html.push(convertedLine.join(''))
+				convertedLine = []
+				return
 			}
+			convertedLine.push(this.keyMap[char] || char)
+		})
 
-			characterToConvert = stashNextCharacterAndAdvanceThePointer();
-		}
-
-		addANewLine();
-		return html.join('<br />');
+		html.push(convertedLine.join(''))
+		return html.join('<br />')
 	}
 
-	public getFilename() {
-		return this.fullFilenameWithPath;
+	public getFilename () {
+		return this.fullFilenameWithPath
 	}
 }
