@@ -1,11 +1,7 @@
 export default class TurnTicket {
-	private turnNumber: number;
+	turnNumber: number
 
-	constructor(turnNumber: number) {
-		this.turnNumber = turnNumber;
-	}
-
-	public getTurnNumber() {
-		return this.turnNumber;
+	constructor (turnNumber: number) {
+		this.turnNumber = turnNumber
 	}
 }

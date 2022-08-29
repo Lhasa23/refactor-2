@@ -5,10 +5,12 @@ describe('Turn Ticket Dispenser', () => {
 
 	describe('TurnTicketDispenser', () => {
 
-		it('foo', () => {
+		it('should arise turn number by sequence', () => {
 			const dispenser = new TicketDispenser()
-			const ticket = dispenser.getTurnTicket()
-			expect(ticket.getTurnNumber()).to.eql(0)
+			const ticket1 = dispenser.getTurnTicket()
+			expect(ticket1.turnNumber).toEqual(0)
+			const ticket2 = dispenser.getTurnTicket()
+			expect(ticket2.turnNumber).toEqual(1)
 		})
 
 	})
