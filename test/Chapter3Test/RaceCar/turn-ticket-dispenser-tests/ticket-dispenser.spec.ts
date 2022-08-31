@@ -13,6 +13,15 @@ describe('Turn Ticket Dispenser', () => {
 			expect(ticket2.turnNumber).toEqual(1)
 		})
 
+		it('should arise turn number by multi dispensers', () => {
+			const dispenser1 = new TicketDispenser()
+			const dispenser2 = new TicketDispenser()
+			const ticket1 = dispenser1.getTurnTicket()
+			expect(ticket1.turnNumber).toEqual(0)
+			const ticket2 = dispenser2.getTurnTicket()
+			expect(ticket2.turnNumber).toEqual(1)
+		})
+
 	})
 
 })
