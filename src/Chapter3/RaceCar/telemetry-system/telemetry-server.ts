@@ -22,9 +22,7 @@ export default class TelemetryServer {
 		}
 
 		// simulate the operation on a real modem
-		const success = this.connectionEventsSimulator(1, 10) <= 8
-
-		this.onlineStatus = success
+		this.onlineStatus = this.connectionEventsSimulator(1, 10) <= 8
 	}
 
 	public disconnect () {

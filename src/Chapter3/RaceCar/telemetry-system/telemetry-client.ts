@@ -7,16 +7,16 @@ export default class TelemetryClient {
 
 	constructor () {
 		this.telemetryServer = new TelemetryServer()
-		this.connect(this.connectionString)
+		this.connect()
 	}
 
-	public connect (telemetryServerConnectionString: string) {
+	public connect () {
 		this.telemetryServer.disconnect()
 
 		let retryLeft = 3
 		while (!this.telemetryServer.getOnlineStatus() && retryLeft > 0) {
-			this.telemetryServer.connect(telemetryServerConnectionString)
-			retryLeft -= 1
+			this.telemetryServer.connect(this.connectionString)
+			retryLeft--
 		}
 
 		if (!this.telemetryServer.getOnlineStatus()) {
