@@ -1,3 +1,5 @@
+import TurnTicket from './turn-ticket'
+
 class TurnNumberSequence {
 	private turnNumber: number
 
@@ -5,8 +7,8 @@ class TurnNumberSequence {
 		this.turnNumber = 0
 	}
 
-	public getNextTurnNumber () {
-		return this.turnNumber++
+	public getTicketAndTurnNext () {
+		return new TurnTicket(this.turnNumber++)
 	}
 }
 
