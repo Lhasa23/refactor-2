@@ -5,9 +5,7 @@ export default class TicketDispenser {
 
 	public getTurnTicket () {
 		const newTurnNumber = TurnNumberSequence.getNextTurnNumber()
-		const newTurnTicket = new TurnTicket(newTurnNumber)
-
-		return newTurnTicket
+		return new TurnTicket(newTurnNumber)
 	}
 
 }

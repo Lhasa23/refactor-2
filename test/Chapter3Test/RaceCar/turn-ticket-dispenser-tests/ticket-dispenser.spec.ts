@@ -4,22 +4,21 @@ import TicketDispenser from '../../../../src/Chapter3/RaceCar/turn-ticket-dispen
 describe('Turn Ticket Dispenser', () => {
 
 	describe('TurnTicketDispenser', () => {
+		const dispenser1 = new TicketDispenser()
+		const dispenser2 = new TicketDispenser()
 
 		it('should arise turn number by sequence', () => {
-			const dispenser = new TicketDispenser()
-			const ticket1 = dispenser.getTurnTicket()
+			const ticket1 = dispenser1.getTurnTicket()
 			expect(ticket1.turnNumber).toEqual(0)
-			const ticket2 = dispenser.getTurnTicket()
+			const ticket2 = dispenser1.getTurnTicket()
 			expect(ticket2.turnNumber).toEqual(1)
 		})
 
 		it('should arise turn number by multi dispensers', () => {
-			const dispenser1 = new TicketDispenser()
-			const dispenser2 = new TicketDispenser()
 			const ticket1 = dispenser1.getTurnTicket()
-			expect(ticket1.turnNumber).toEqual(0)
+			expect(ticket1.turnNumber).toEqual(2)
 			const ticket2 = dispenser2.getTurnTicket()
-			expect(ticket2.turnNumber).toEqual(1)
+			expect(ticket2.turnNumber).toEqual(3)
 		})
 
 	})
