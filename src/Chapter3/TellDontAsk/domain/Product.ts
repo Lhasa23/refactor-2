@@ -5,27 +5,9 @@ class Product {
 	price: number
 	category: Category
 
-	public getName (): string {
-		return this.name
-	}
-
-	public setName (name: string): void {
+	constructor (name = '', price = 0, category: Category) {
 		this.name = name
-	}
-
-	public getPrice (): number {
-		return this.price
-	}
-
-	public setPrice (price: number): void {
 		this.price = price
-	}
-
-	public getCategory (): Category {
-		return this.category
-	}
-
-	public setCategory (category: Category): void {
 		this.category = category
 	}
 }

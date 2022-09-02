@@ -9,48 +9,14 @@ class Order {
 	status: OrderStatus
 	id: number
 
-	public getTotal (): number {
-		return this.total
-	}
 
-	public setTotal (total: number): void {
+	constructor (status: OrderStatus, items: OrderItem[] = [], currency: string = '', total: number = 0, tax: number = 0) {
 		this.total = total
-	}
-
-	public getCurrency (): string {
-		return this.currency
-	}
-
-	public setCurrency (currency: string): void {
 		this.currency = currency
-	}
-
-	public getItems (): OrderItem[] {
-		return this.items
-	}
-
-	public setItems (items: OrderItem[]): void {
 		this.items = items
-	}
-
-	public getTax (): number {
-		return this.tax
-	}
-
-	public setTax (tax: number): void {
 		this.tax = tax
-	}
-
-	public getStatus (): OrderStatus {
-		return this.status
-	}
-
-	public setStatus (status: OrderStatus): void {
 		this.status = status
-	}
-
-	public getId (): number {
-		return this.id
+		this.id = 0
 	}
 
 	public setId (id: number): void {
