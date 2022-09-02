@@ -1,13 +1,11 @@
+let orderId = 1
+
 class OrderShipmentRequest {
-  private orderId: number;
+	readonly orderId: number
 
-  public setOrderId(orderId: number): void {
-      this.orderId = orderId;
-  }
-
-  public getOrderId(): number {
-      return this.orderId;
-  }
+	constructor () {
+		this.orderId = orderId++
+	}
 }
 
-export default OrderShipmentRequest;
+export default OrderShipmentRequest

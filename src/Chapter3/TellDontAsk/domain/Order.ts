@@ -1,6 +1,8 @@
 import OrderItem from './OrderItem'
 import { OrderStatus } from './OrderStatus'
 
+// let id = 1
+
 class Order {
 	total: number
 	currency: string
