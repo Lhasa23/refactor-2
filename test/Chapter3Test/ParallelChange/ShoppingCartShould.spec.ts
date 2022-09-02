@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import ShoppingCart from '../../../src/Chapter3/ParallelChange/Field/ShoppingCart'
+import ShoppingCart from 'src/Chapter3/ParallelChange/Field/ShoppingCart'
 
 describe('shopping cart', () => {
 	let cart = new ShoppingCart()

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import Alarm from '../../../../src/Chapter3/RaceCar/tire-pressure-monitoring-system/alarm'
+import Alarm from 'src/Chapter3/RaceCar/tire-pressure-monitoring-system/alarm'
 
 describe('Tyre Pressure Monitoring System', () => {
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import HtmlTextConverter from '../../../../src/Chapter3/RaceCar/text-converter/html-text-converter'
+import HtmlTextConverter from 'src/Chapter3/RaceCar/text-converter/html-text-converter'
 
 describe('Html Converter', () => {
 

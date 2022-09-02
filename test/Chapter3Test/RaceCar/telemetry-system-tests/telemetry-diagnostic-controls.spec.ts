@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import TelemetryDiagnosticControls
-	from '../../../../src/Chapter3/RaceCar/telemetry-system/telemetry-diagnostic-controls'
+import TelemetryDiagnosticControls from 'src/Chapter3/RaceCar/telemetry-system/telemetry-diagnostic-controls'
 
 describe('Telemetry System', () => {
 

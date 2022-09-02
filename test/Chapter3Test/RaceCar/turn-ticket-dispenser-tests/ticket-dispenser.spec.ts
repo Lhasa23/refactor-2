@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import TicketDispenser from '../../../../src/Chapter3/RaceCar/turn-ticket-dispenser/ticket-dispenser'
+import TicketDispenser from 'src/Chapter3/RaceCar/turn-ticket-dispenser/ticket-dispenser'
 
 describe('Turn Ticket Dispenser', () => {
 

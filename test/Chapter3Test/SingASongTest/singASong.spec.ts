@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import sing from '../../../src/Chapter3/SingASong/song'
+import sing from 'src/Chapter3/SingASong/song'
 
 // The two tests marked with concurrent will be run in parallel
 describe('test sing a song', () => {
