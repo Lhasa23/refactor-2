@@ -20,6 +20,30 @@ class Order {
 		this.id = 0
 	}
 
+	get isCreated () {
+		return this.status === OrderStatus.CREATED
+	}
+
+	get isApproved () {
+		return this.status === OrderStatus.APPROVED
+	}
+
+	get isShipped () {
+		return this.status === OrderStatus.SHIPPED
+	}
+
+	get isRejected () {
+		return this.status === OrderStatus.REJECTED
+	}
+
+	get totalAmount () {
+		return this.items.reduce((amount, item) => amount + item.taxedAmount, this.total)
+	}
+
+	get taxAmount () {
+		return this.items.reduce((amount, item) => amount + item.tax, this.tax)
+	}
+
 	public setId (id: number): void {
 		this.id = id
 	}
@@ -36,20 +60,8 @@ class Order {
 		this.status = OrderStatus.SHIPPED
 	}
 
-	get isCreated () {
-		return this.status === OrderStatus.CREATED
-	}
-
-	get isApproved () {
-		return this.status === OrderStatus.APPROVED
-	}
-
-	get isShipped () {
-		return this.status === OrderStatus.SHIPPED
-	}
-
-	get isRejected () {
-		return this.status === OrderStatus.REJECTED
+	addOrderItem (item: OrderItem) {
+		this.items.push(item)
 	}
 }
 

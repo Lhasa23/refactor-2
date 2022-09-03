@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import Order from 'src/Chapter3/TellDontAsk/domain/Order'
-import { OrderStatus } from 'src/Chapter3/TellDontAsk/domain/OrderStatus'
 import OrderCannotBeShippedException from 'src/Chapter3/TellDontAsk/useCase/OrderCannotBeShippedException'
 import OrderCannotBeShippedTwiceException from 'src/Chapter3/TellDontAsk/useCase/OrderCannotBeShippedTwiceException'
 import OrderShipmentRequest from 'src/Chapter3/TellDontAsk/useCase/OrderShipmentRequest'
@@ -30,7 +29,7 @@ describe('OrderShipmentUseCase', () => {
 		expect(request.orderId).toEqual(1)
 		useCase.run(request)
 
-		expect(orderRepository.getSavedOrder().status).toBe(OrderStatus.SHIPPED)
+		expect((orderRepository.getSavedOrder() as Order).isShipped).toBe(true)
 		expect(shipmentService.getShippedOrder()).toBe(initialOrder)
 	})
 

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import Category from 'src/Chapter3/TellDontAsk/domain/Category'
 import Order from 'src/Chapter3/TellDontAsk/domain/Order'
-import { OrderStatus } from 'src/Chapter3/TellDontAsk/domain/OrderStatus'
 import Product from 'src/Chapter3/TellDontAsk/domain/Product'
 import { ProductCatalog } from 'src/Chapter3/TellDontAsk/repository/ProductCatalog'
 import OrderCreationUseCase from 'src/Chapter3/TellDontAsk/useCase/OrderCreationUseCase'
@@ -22,20 +21,18 @@ describe('OrderApprovalUseCase', () => {
 
 	it('sellMultipleItems', () => {
 		let saladRequest: SellItemRequest = new SellItemRequest('salad', 2)
-
 		let tomatoRequest: SellItemRequest = new SellItemRequest('tomato', 3)
 
 		let request: SellItemsRequest = new SellItemsRequest()
-		request.setRequests([])
-		request.getRequests().push(saladRequest)
-		request.getRequests().push(tomatoRequest)
+		request.addRequest(saladRequest)
+		request.addRequest(tomatoRequest)
 
 		useCase.run(request)
 
 		const insertedOrder: Order = orderRepository.getSavedOrder() as Order
 		expect(insertedOrder.isCreated).toBe(true)
-		expect(insertedOrder.total).toBe(23.20)
-		expect(insertedOrder.tax).toBe((2.13))
+		expect(insertedOrder.totalAmount).toBe(23.20)
+		expect(insertedOrder.taxAmount).toBe((2.13))
 		expect(insertedOrder.currency).toBe(('EUR'))
 		expect(insertedOrder.items.length).toBe(2)
 		expect(insertedOrder.items[0].product).toBe(saladProduct)
@@ -50,9 +47,8 @@ describe('OrderApprovalUseCase', () => {
 
 	it('unknownProduct', () => {
 		let request: SellItemsRequest = new SellItemsRequest()
-		request.setRequests([])
 		let unknownProductRequest: SellItemRequest = new SellItemRequest('unknown product')
-		request.getRequests().push(unknownProductRequest)
+		request.addRequest(unknownProductRequest)
 
 		expect(() => useCase.run(request)).toThrow(new UnknownProductException())
 	})

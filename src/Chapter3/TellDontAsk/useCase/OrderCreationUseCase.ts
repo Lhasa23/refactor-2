@@ -18,20 +18,17 @@ class OrderCreationUseCase {
 	public run (request: SellItemsRequest): void {
 		const order: Order = new Order([], 'EUR', 0, 0)
 
-		for (const itemRequest of request.getRequests()) {
-			const product: Product = this.productCatalog.getByName(itemRequest.getProductName())
+		for (const requestItem of request.requests) {
+			const product: Product = this.productCatalog.getByName(requestItem.productName)
 
 			if (product === undefined) {
 				throw new UnknownProductException()
 			} else {
-				const taxedAmount: number = Math.round(product.productUnitaryTaxedAmount * itemRequest.quantity * 100) / 100
-				const taxAmount: number = product.productUnitaryTax * itemRequest.quantity
+				const taxedAmount: number = Math.round(product.productUnitaryTaxedAmount * requestItem.quantity * 100) / 100
+				const taxAmount: number = product.productUnitaryTax * requestItem.quantity
 
-				const orderItem: OrderItem = new OrderItem(product, itemRequest.quantity, taxAmount, taxedAmount)
-				order.items.push(orderItem)
-
-				order.total = order.total + taxedAmount
-				order.tax = order.tax + taxAmount
+				const orderItem: OrderItem = new OrderItem(product, requestItem.quantity, taxedAmount, taxAmount)
+				order.addOrderItem(orderItem)
 			}
 		}
 

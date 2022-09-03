@@ -6,7 +6,7 @@ class OrderItem {
 	taxedAmount: number
 	tax: number
 
-	constructor (product: Product, quantity: number, tax: number, taxedAmount: number) {
+	constructor (product: Product, quantity: number, taxedAmount: number, tax: number) {
 		this.product = product
 		this.quantity = quantity
 		this.taxedAmount = taxedAmount

@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import Order from 'src/Chapter3/TellDontAsk/domain/Order'
-import { OrderStatus } from 'src/Chapter3/TellDontAsk/domain/OrderStatus'
 import ApprovedOrderCannotBeRejectedException
 	from 'src/Chapter3/TellDontAsk/useCase/ApprovedOrderCannotBeRejectedException'
 import OrderApprovalRequest from 'src/Chapter3/TellDontAsk/useCase/OrderApprovalRequest'
@@ -28,7 +27,7 @@ describe('OrderApprovalUseCase', () => {
 
 		useCase.run(request)
 
-		const savedOrder: Order = orderRepository.getSavedOrder()
+		const savedOrder: Order = orderRepository.getSavedOrder() as Order
 		expect(savedOrder.isApproved).toBe(true)
 	})
 
@@ -41,7 +40,7 @@ describe('OrderApprovalUseCase', () => {
 
 		useCase.run(request)
 
-		const savedOrder: Order = orderRepository.getSavedOrder()
+		const savedOrder: Order = orderRepository.getSavedOrder() as Order
 		expect(savedOrder.isRejected).toBe(true)
 	})
 

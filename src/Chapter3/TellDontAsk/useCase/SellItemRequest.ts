@@ -6,10 +6,6 @@ class SellItemRequest {
 		this.productName = productName
 		this.quantity = quantity
 	}
-
-	public getProductName (): string {
-		return this.productName
-	}
 }
 
 export default SellItemRequest
