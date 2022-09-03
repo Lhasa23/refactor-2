@@ -1,23 +1,16 @@
 class OrderApprovalRequest {
-  private orderId: number;
-  private approved: boolean;
+	readonly orderId: number
+	private readonly approved: boolean
 
-  public  setOrderId(orderId: number): void {
-    this.orderId = orderId;
-  }
+	constructor (id: number, approved: boolean) {
+		this.orderId = id
+		this.approved = approved
+	}
 
-  public getOrderId(): number {
-    return this.orderId;
-  }
-
-  public setApproved(approved: boolean): void {
-    this.approved = approved;
-  }
-
-  public isApproved(): boolean{
-    return this.approved;
-  }
+	public isApproved (): boolean {
+		return this.approved
+	}
 }
 
-export default OrderApprovalRequest;
+export default OrderApprovalRequest
 

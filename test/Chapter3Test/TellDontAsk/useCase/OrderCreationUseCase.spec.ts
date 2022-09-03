@@ -21,13 +21,9 @@ describe('OrderApprovalUseCase', () => {
 	const useCase: OrderCreationUseCase = new OrderCreationUseCase(orderRepository, productCatalog)
 
 	it('sellMultipleItems', () => {
-		let saladRequest: SellItemRequest = new SellItemRequest()
-		saladRequest.setProductName('salad')
-		saladRequest.setQuantity(2)
+		let saladRequest: SellItemRequest = new SellItemRequest('salad', 2)
 
-		let tomatoRequest: SellItemRequest = new SellItemRequest()
-		tomatoRequest.setProductName('tomato')
-		tomatoRequest.setQuantity(3)
+		let tomatoRequest: SellItemRequest = new SellItemRequest('tomato', 3)
 
 		let request: SellItemsRequest = new SellItemsRequest()
 		request.setRequests([])
@@ -37,18 +33,16 @@ describe('OrderApprovalUseCase', () => {
 		useCase.run(request)
 
 		const insertedOrder: Order = orderRepository.getSavedOrder() as Order
-		expect(insertedOrder.status).toBe(OrderStatus.CREATED)
+		expect(insertedOrder.isCreated).toBe(true)
 		expect(insertedOrder.total).toBe(23.20)
 		expect(insertedOrder.tax).toBe((2.13))
 		expect(insertedOrder.currency).toBe(('EUR'))
 		expect(insertedOrder.items.length).toBe(2)
-		expect(insertedOrder.items[0].product.name).toBe('salad')
-		expect(insertedOrder.items[0].product.price).toBe(3.56)
+		expect(insertedOrder.items[0].product).toBe(saladProduct)
 		expect(insertedOrder.items[0].quantity).toBe(2)
 		expect(insertedOrder.items[0].taxedAmount).toBe(7.84)
 		expect(insertedOrder.items[0].tax).toBe(0.72)
-		expect(insertedOrder.items[1].product.name).toBe('tomato')
-		expect(insertedOrder.items[1].product.price).toBe(4.65)
+		expect(insertedOrder.items[1].product).toBe(tomatoProduct)
 		expect(insertedOrder.items[1].quantity).toBe(3)
 		expect(insertedOrder.items[1].taxedAmount).toBe(15.36)
 		expect(insertedOrder.items[1].tax).toBe(1.41)
@@ -57,8 +51,7 @@ describe('OrderApprovalUseCase', () => {
 	it('unknownProduct', () => {
 		let request: SellItemsRequest = new SellItemsRequest()
 		request.setRequests([])
-		let unknownProductRequest: SellItemRequest = new SellItemRequest()
-		unknownProductRequest.setProductName('unknown product')
+		let unknownProductRequest: SellItemRequest = new SellItemRequest('unknown product')
 		request.getRequests().push(unknownProductRequest)
 
 		expect(() => useCase.run(request)).toThrow(new UnknownProductException())

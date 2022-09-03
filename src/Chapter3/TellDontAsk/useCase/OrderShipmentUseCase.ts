@@ -18,17 +18,17 @@ class OrderShipmentUseCase {
 	public run (request: OrderShipmentRequest): void {
 		const order: Order = this.orderRepository.getById(request.orderId)
 
-		if (order.status === OrderStatus.CREATED || order.status === OrderStatus.REJECTED) {
+		if (order.isCreated || order.isRejected) {
 			throw new OrderCannotBeShippedException()
 		}
 
-		if (order.status === OrderStatus.SHIPPED) {
+		if (order.isShipped) {
 			throw new OrderCannotBeShippedTwiceException()
 		}
 
 		this.shipmentService.ship(order)
 
-		order.status = OrderStatus.SHIPPED
+		order.orderShip()
 		this.orderRepository.save(order)
 	}
 }

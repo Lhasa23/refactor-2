@@ -1,22 +1,15 @@
 class SellItemRequest {
-  private quantity: number;
-  private productName: string;
+	productName: string
+	quantity: number
 
-  public setQuantity(quantity: number): void{
-      this.quantity = quantity;
-  }
+	constructor (productName: string, quantity: number = 0) {
+		this.productName = productName
+		this.quantity = quantity
+	}
 
-  public setProductName(productName: string): void {
-      this.productName = productName;
-  }
-
-  public getQuantity(): number {
-      return this.quantity;
-  }
-
-  public getProductName(): string {
-      return this.productName;
-  }
+	public getProductName (): string {
+		return this.productName
+	}
 }
 
-export default SellItemRequest;
+export default SellItemRequest
