@@ -16,7 +16,7 @@ class OrderCreationUseCase {
 	}
 
 	public run (request: SellItemsRequest): void {
-		const order: Order = new Order([], 'EUR', 0, 0)
+		const order: Order = new Order('EUR')
 
 		for (const requestItem of request.requests) {
 			const product: Product = this.productCatalog.getByName(requestItem.productName)

@@ -1,23 +1,19 @@
 import OrderItem from './OrderItem'
 import { OrderStatus } from './OrderStatus'
 
-// let id = 1
+let id = 1
 
 class Order {
-	total: number
 	currency: string
-	items: OrderItem[]
-	tax: number
+	items: OrderItem[] = []
+	total: number = 0
+	tax: number = 0
 	private status: OrderStatus = OrderStatus.CREATED
 	id: number
 
-
-	constructor (items: OrderItem[] = [], currency: string = '', total: number = 0, tax: number = 0) {
-		this.total = total
+	constructor (currency: string = '') {
 		this.currency = currency
-		this.items = items
-		this.tax = tax
-		this.id = 0
+		this.id = id++
 	}
 
 	get isCreated () {
@@ -42,10 +38,6 @@ class Order {
 
 	get taxAmount () {
 		return this.items.reduce((amount, item) => amount + item.tax, this.tax)
-	}
-
-	public setId (id: number): void {
-		this.id = id
 	}
 
 	orderApprove () {
