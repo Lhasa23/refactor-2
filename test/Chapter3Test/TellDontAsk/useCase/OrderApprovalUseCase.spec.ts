@@ -23,7 +23,7 @@ describe('OrderApprovalUseCase', () => {
 		let initialOrder: Order = new Order()
 		orderRepository.addOrder(initialOrder)
 
-		let request: OrderApprovalRequest = new OrderApprovalRequest(1, true)
+		let request: OrderApprovalRequest = new OrderApprovalRequest(initialOrder.id, true)
 
 		useCase.run(request)
 
