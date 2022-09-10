@@ -5,7 +5,7 @@ class Product {
 	price: number
 	category: Category
 
-	constructor (name = '', price = 0, category: Category) {
+	constructor (name: string = '', price: number = 0, category: Category = new Category()) {
 		this.name = name
 		this.price = price
 		this.category = category

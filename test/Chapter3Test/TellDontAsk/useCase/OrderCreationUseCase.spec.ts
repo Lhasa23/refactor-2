@@ -9,6 +9,7 @@ import SellItemsRequest from 'src/Chapter3/TellDontAsk/useCase/SellItemsRequest'
 import UnknownProductException from 'src/Chapter3/TellDontAsk/useCase/UnknownProductException'
 import InMemoryProductCatalog from '../doubles/InMemoryProductCatalog'
 import TestOrderRepository from '../doubles/TestOrderRepository'
+import OrderItem from '../../../../src/Chapter3/TellDontAsk/domain/OrderItem'
 
 describe('OrderApprovalUseCase', () => {
 	const orderRepository: TestOrderRepository = new TestOrderRepository()
@@ -16,8 +17,10 @@ describe('OrderApprovalUseCase', () => {
 
 	const saladProduct = new Product('salad', 3.56, food)
 	const tomatoProduct = new Product('tomato', 4.65, food)
+
 	const productCatalog: ProductCatalog = new InMemoryProductCatalog([saladProduct, tomatoProduct])
-	const useCase: OrderCreationUseCase = new OrderCreationUseCase(orderRepository, productCatalog)
+
+	const creationUseCase: OrderCreationUseCase = new OrderCreationUseCase(orderRepository, productCatalog)
 
 	it('sellMultipleItems', () => {
 		let saladRequest: SellItemRequest = new SellItemRequest('salad', 2)
@@ -27,7 +30,7 @@ describe('OrderApprovalUseCase', () => {
 		request.addRequest(saladRequest)
 		request.addRequest(tomatoRequest)
 
-		useCase.run(request)
+		creationUseCase.run(request)
 
 		const insertedOrder: Order = orderRepository.getSavedOrder() as Order
 		expect(insertedOrder.isCreated).toBe(true)
@@ -35,14 +38,8 @@ describe('OrderApprovalUseCase', () => {
 		expect(insertedOrder.taxAmount).toBe((2.13))
 		expect(insertedOrder.currency).toBe(('EUR'))
 		expect(insertedOrder.items.length).toBe(2)
-		expect(insertedOrder.items[0].product).toBe(saladProduct)
-		expect(insertedOrder.items[0].quantity).toBe(2)
-		expect(insertedOrder.items[0].taxedAmount).toBe(7.84)
-		expect(insertedOrder.items[0].tax).toBe(0.72)
-		expect(insertedOrder.items[1].product).toBe(tomatoProduct)
-		expect(insertedOrder.items[1].quantity).toBe(3)
-		expect(insertedOrder.items[1].taxedAmount).toBe(15.36)
-		expect(insertedOrder.items[1].tax).toBe(1.41)
+		expect(JSON.stringify(insertedOrder.items[0])).toBe(JSON.stringify(new OrderItem(saladProduct, 2, 7.84, 0.72)))
+		expect(JSON.stringify(insertedOrder.items[1])).toBe(JSON.stringify(new OrderItem(tomatoProduct, 3, 15.36, 1.41)))
 	})
 
 	it('unknownProduct', () => {
@@ -50,6 +47,6 @@ describe('OrderApprovalUseCase', () => {
 		let unknownProductRequest: SellItemRequest = new SellItemRequest('unknown product')
 		request.addRequest(unknownProductRequest)
 
-		expect(() => useCase.run(request)).toThrow(new UnknownProductException())
+		expect(() => creationUseCase.run(request)).toThrow(new UnknownProductException())
 	})
 })

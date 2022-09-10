@@ -4,22 +4,27 @@ import OrderItem from '../domain/OrderItem'
 class SellItemRequest {
 	productName: string
 	quantity: number
+	private product: Product = new Product()
 
 	constructor (productName: string, quantity: number = 0) {
 		this.productName = productName
 		this.quantity = quantity
 	}
 
-	buildOrderItem (product: Product) {
-		return new OrderItem(product, this.quantity, this.getRequestTaxedAmount(product), this.getRequestTaxAmount(product))
+	combiningProduct (product: Product) {
+		this.product = product
 	}
 
-	private getRequestTaxedAmount (product: Product) {
-		return Math.round(product.productUnitaryTaxedAmount * this.quantity * 100) / 100
+	buildOrderItem () {
+		return new OrderItem(this.product, this.quantity, this.getRequestTaxedAmount(), this.getRequestTaxAmount())
 	}
 
-	private getRequestTaxAmount (product: Product) {
-		return product.productUnitaryTax * this.quantity
+	private getRequestTaxedAmount () {
+		return Math.round(this.product.productUnitaryTaxedAmount * this.quantity * 100) / 100
+	}
+
+	private getRequestTaxAmount () {
+		return this.product.productUnitaryTax * this.quantity
 	}
 }
 

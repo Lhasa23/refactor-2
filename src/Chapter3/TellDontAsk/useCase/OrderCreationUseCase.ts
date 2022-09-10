@@ -24,7 +24,8 @@ class OrderCreationUseCase {
 			if (product === undefined) {
 				throw new UnknownProductException()
 			} else {
-				const orderItem: OrderItem = requestItem.buildOrderItem(product)
+				requestItem.combiningProduct(product)
+				const orderItem: OrderItem = requestItem.buildOrderItem()
 				order.addOrderItem(orderItem)
 			}
 		}
