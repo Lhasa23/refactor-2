@@ -24,10 +24,7 @@ class OrderCreationUseCase {
 			if (product === undefined) {
 				throw new UnknownProductException()
 			} else {
-				const taxedAmount: number = Math.round(product.productUnitaryTaxedAmount * requestItem.quantity * 100) / 100
-				const taxAmount: number = product.productUnitaryTax * requestItem.quantity
-
-				const orderItem: OrderItem = new OrderItem(product, requestItem.quantity, taxedAmount, taxAmount)
+				const orderItem: OrderItem = requestItem.buildOrderItem(product)
 				order.addOrderItem(orderItem)
 			}
 		}
