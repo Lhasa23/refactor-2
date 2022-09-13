@@ -20,12 +20,10 @@ describe('OrderShipmentUseCase', () => {
 
 	it('shipApprovedOrder', () => {
 		let initialOrder: Order = new Order()
-		initialOrder.orderApprove()
+		initialOrder.approveOrder()
 		orderRepository.addOrder(initialOrder)
 
 		let request: OrderShipmentRequest = new OrderShipmentRequest()
-
-		expect(request.orderId).toEqual(1)
 		useCase.run(request)
 
 		expect((orderRepository.getSavedOrder() as Order).isShipped).toBe(true)
@@ -37,7 +35,6 @@ describe('OrderShipmentUseCase', () => {
 		orderRepository.addOrder(initialOrder)
 
 		let request: OrderShipmentRequest = new OrderShipmentRequest()
-		expect(request.orderId).toEqual(2)
 
 		expect(() => useCase.run(request)).toThrow(new OrderCannotBeShippedException())
 		expect(orderRepository.getSavedOrder()).toBe(null)
@@ -46,11 +43,10 @@ describe('OrderShipmentUseCase', () => {
 
 	it('rejectedOrdersCannotBeShipped', () => {
 		let initialOrder: Order = new Order()
-		initialOrder.orderReject()
+		initialOrder.rejectOrder()
 		orderRepository.addOrder(initialOrder)
 
 		let request: OrderShipmentRequest = new OrderShipmentRequest()
-		expect(request.orderId).toEqual(3)
 
 		expect(() => useCase.run(request)).toThrow(new OrderCannotBeShippedException())
 		expect(orderRepository.getSavedOrder()).toBe(null)
@@ -59,11 +55,10 @@ describe('OrderShipmentUseCase', () => {
 
 	it('shippedOrdersCannotBeShippedAgain', () => {
 		let initialOrder: Order = new Order()
-		initialOrder.orderShip()
+		initialOrder.shipOrder()
 		orderRepository.addOrder(initialOrder)
 
 		let request: OrderShipmentRequest = new OrderShipmentRequest()
-		expect(request.orderId).toEqual(4)
 
 		expect(() => useCase.run(request)).toThrow(new OrderCannotBeShippedTwiceException())
 		expect(orderRepository.getSavedOrder()).toBe(null)

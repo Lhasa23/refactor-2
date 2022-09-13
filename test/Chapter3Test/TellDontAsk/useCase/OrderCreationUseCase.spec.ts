@@ -7,9 +7,9 @@ import OrderCreationUseCase from 'src/Chapter3/TellDontAsk/useCase/OrderCreation
 import SellItemRequest from 'src/Chapter3/TellDontAsk/useCase/SellItemRequest'
 import SellItemsRequest from 'src/Chapter3/TellDontAsk/useCase/SellItemsRequest'
 import UnknownProductException from 'src/Chapter3/TellDontAsk/useCase/UnknownProductException'
+import OrderItem from 'src/Chapter3/TellDontAsk/domain/OrderItem'
 import InMemoryProductCatalog from '../doubles/InMemoryProductCatalog'
 import TestOrderRepository from '../doubles/TestOrderRepository'
-import OrderItem from '../../../../src/Chapter3/TellDontAsk/domain/OrderItem'
 
 describe('OrderApprovalUseCase', () => {
 	const orderRepository: TestOrderRepository = new TestOrderRepository()

@@ -45,7 +45,7 @@ describe('OrderApprovalUseCase', () => {
 
 	it('cannotApproveRejectedOrder', () => {
 		const initialOrder: Order = new Order()
-		initialOrder.orderReject()
+		initialOrder.rejectOrder()
 		orderRepository.addOrder(initialOrder)
 
 		const request: OrderApprovalRequest = new OrderApprovalRequest(initialOrder.id, true)
@@ -56,7 +56,7 @@ describe('OrderApprovalUseCase', () => {
 
 	it('cannotRejectApprovedOrder', () => {
 		const initialOrder: Order = new Order()
-		initialOrder.orderApprove()
+		initialOrder.approveOrder()
 		orderRepository.addOrder(initialOrder)
 
 		const request: OrderApprovalRequest = new OrderApprovalRequest(initialOrder.id, false)
@@ -67,7 +67,7 @@ describe('OrderApprovalUseCase', () => {
 
 	it('shippedOrdersCannotBeApproved', () => {
 		const initialOrder: Order = new Order()
-		initialOrder.orderShip()
+		initialOrder.shipOrder()
 		orderRepository.addOrder(initialOrder)
 
 		const request: OrderApprovalRequest = new OrderApprovalRequest(initialOrder.id, true)
@@ -78,7 +78,7 @@ describe('OrderApprovalUseCase', () => {
 
 	it('shippedOrdersCannotBeRejected', () => {
 		let initialOrder: Order = new Order()
-		initialOrder.orderShip()
+		initialOrder.shipOrder()
 		orderRepository.addOrder(initialOrder)
 
 		let request: OrderApprovalRequest = new OrderApprovalRequest(initialOrder.id, false)

@@ -28,7 +28,7 @@ class OrderShipmentUseCase {
 
 		this.shipmentService.ship(order)
 
-		order.orderShip()
+		order.shipOrder()
 		this.orderRepository.save(order)
 	}
 }

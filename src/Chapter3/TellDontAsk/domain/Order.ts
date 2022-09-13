@@ -40,15 +40,15 @@ class Order {
 		return this.items.reduce((amount, item) => amount + item.tax, this.tax)
 	}
 
-	orderApprove () {
+	approveOrder () {
 		this.status = OrderStatus.APPROVED
 	}
 
-	orderReject () {
+	rejectOrder () {
 		this.status = OrderStatus.REJECTED
 	}
 
-	orderShip () {
+	shipOrder () {
 		this.status = OrderStatus.SHIPPED
 	}
 

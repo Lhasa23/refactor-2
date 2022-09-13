@@ -28,7 +28,7 @@ class OrderApprovalUseCase {
 			throw new ApprovedOrderCannotBeRejectedException()
 		}
 
-		request.isApproved() ? order.orderApprove() : order.orderReject()
+		request.isApproved() ? order.approveOrder() : order.rejectOrder()
 		this.orderRepository.save(order)
 	}
 }
