@@ -22,7 +22,7 @@ function checkScore (game: TennisGame, player1Score: number, player2Score: numbe
 			game.wonPoint('player2')
 		}
 	}
-	expect(game.getScore()).to.be.equals(expectedScore)
+	expect(game.getScore()).toEqual(expectedScore)
 }
 
 describe('TennisGame', function () {
