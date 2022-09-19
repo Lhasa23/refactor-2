@@ -7,7 +7,7 @@ class OrderApprovalRequest {
 		this.approved = approved
 	}
 
-	public isApproved (): boolean {
+	public readyApprove (): boolean {
 		return this.approved
 	}
 }

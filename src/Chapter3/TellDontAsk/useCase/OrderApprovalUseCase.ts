@@ -1,5 +1,4 @@
 import Order from '../domain/Order'
-import { OrderStatus } from '../domain/OrderStatus'
 import OrderRepository from '../repository/OrderRepository'
 import ApprovedOrderCannotBeRejectedException from './ApprovedOrderCannotBeRejectedException'
 import OrderApprovalRequest from './OrderApprovalRequest'
@@ -20,15 +19,15 @@ class OrderApprovalUseCase {
 			throw new ShippedOrdersCannotBeChangedException()
 		}
 
-		if (request.isApproved() && order.isRejected) {
+		if (request.readyApprove() && order.isRejected) {
 			throw new RejectedOrderCannotBeApprovedException()
 		}
 
-		if (!request.isApproved() && order.isApproved) {
+		if (!request.readyApprove() && order.isApproved) {
 			throw new ApprovedOrderCannotBeRejectedException()
 		}
 
-		request.isApproved() ? order.approveOrder() : order.rejectOrder()
+		request.readyApprove() ? order.approveOrder() : order.rejectOrder()
 		this.orderRepository.save(order)
 	}
 }
