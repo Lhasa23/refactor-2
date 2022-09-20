@@ -31,9 +31,9 @@ export class TennisGame1 implements TennisGame {
 
 	private outerFourScore () {
 		const minusResult: number = this.m_score1 - this.m_score2
-		if (minusResult === 1) return 'Advantage player1'
-		if (minusResult === -1) return 'Advantage player2'
-		if (minusResult >= 2) return 'Win for player1'
-		return 'Win for player2'
+		if (minusResult === 1) return `Advantage ${this.player1Name}`
+		if (minusResult === -1) return `Advantage ${this.player2Name}`
+		if (minusResult >= 2) return `Win for ${this.player1Name}`
+		return `Win for ${this.player2Name}`
 	}
 }
