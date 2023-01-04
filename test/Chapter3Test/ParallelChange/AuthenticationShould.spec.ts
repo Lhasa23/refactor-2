@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import AuthenticationService from '../../../src/Chapter3/ParallelChange/Method/AuthenticationService.js'
+import AuthenticationService from 'src/Chapter3/ParallelChange/Method/AuthenticationService'
 
 describe('authentication service', () => {
 	it('administrator is always authenticated', () => {

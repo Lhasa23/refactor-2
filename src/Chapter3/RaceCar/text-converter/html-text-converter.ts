@@ -1,63 +1,28 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs'
 
 export default class HtmlTextConverter {
-	private fullFilenameWithPath: string;
+	private readonly fullFilenameWithPath: string
+	private readonly text: string
+	private readonly keyMap: { [name: string]: string } = { '<': '&lt;', '>': '&gt;', '&': '&amp;' }
 
-	constructor(fullFilenameWithPath: string) {
-		this.fullFilenameWithPath = fullFilenameWithPath;
+	constructor (fullFilenameWithPath: string) {
+		this.fullFilenameWithPath = fullFilenameWithPath
+		this.text = readFileSync(this.fullFilenameWithPath).toString()
 	}
 
-	public convertToHtml(): string {
-
-		const text = readFileSync(this.fullFilenameWithPath).toString();
-
-		function stashNextCharacterAndAdvanceThePointer() {
-			const c = text.charAt(i);
-			i += 1;
-			return c;
-		}
-
-		function addANewLine() {
-			const line = convertedLine.join('');
-			html.push(line);
-			convertedLine = [];
-		}
-
-		function pushACharacterToTheOutput() {
-			convertedLine.push(characterToConvert);
-		}
-
-		let i = 0;
-		const html: string[] = [];
-		let convertedLine: string[] = [];
-		let characterToConvert = stashNextCharacterAndAdvanceThePointer();
-		while (i <= text.length) {
-
-			switch (characterToConvert) {
-				case '<':
-					convertedLine.push('&lt;');
-					break;
-				case '>':
-					convertedLine.push('&gt;');
-					break;
-				case '&':
-					convertedLine.push('&amp;');
-					break;
-				case '\n':
-					addANewLine();
-					break;
-				default:
-					pushACharacterToTheOutput();
-			}
-
-			characterToConvert = stashNextCharacterAndAdvanceThePointer();
-		}
-
-		addANewLine();
-		return html.join('<br />');
+	public convertToHtml (): string {
+		return this.text.split('\n').map((line) => {
+			return line.split('').reduce((convertingLine, char) => {
+				return convertingLine + this.getEscapeChar(char)
+			}, '')
+		}).join('<br />')
 	}
 
-	public getFilename() {
-		return this.fullFilenameWithPath;
+	public getFilename () {
+		return this.fullFilenameWithPath.split('/').pop()
+	}
+
+	private getEscapeChar (char: string) {
+		return this.keyMap[char] || char
 	}
 }

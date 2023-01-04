@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createStatementData } from '../../src/Chapter1/createStatementData'
+import { createStatementData } from 'src/Chapter1/createStatementData'
 
 // The two tests marked with concurrent will be run in parallel
 describe('test statement', () => {

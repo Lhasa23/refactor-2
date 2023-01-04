@@ -1,4 +1,4 @@
-import { Item, GildedRose } from '../../../src/Chapter3/GildedRose/gilded-rose'
+import { Item, GildedRose } from 'src/Chapter3/GildedRose/gilded-rose'
 import { describe, expect, it } from 'vitest'
 
 describe('Gilded Rose', () => {

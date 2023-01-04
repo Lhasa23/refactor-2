@@ -1,15 +1,15 @@
-class TurnNumberSequence {
-	private turnNumber: number;
+import TurnTicket from './turn-ticket'
 
-	constructor() {
-		this.turnNumber = 0;
+class TurnNumberSequence {
+	private turnNumber: number
+
+	constructor () {
+		this.turnNumber = 0
 	}
 
-	public getNextTurnNumber() {
-		return this.turnNumber++;
+	public getTicketAndTurnNext () {
+		return new TurnTicket(this.turnNumber++)
 	}
 }
 
-const sequence = new TurnNumberSequence();
-
-export default sequence;
+export default new TurnNumberSequence()
